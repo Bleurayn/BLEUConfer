@@ -1,0 +1,102 @@
+{
+  "system": "BLEUConfer",
+  "version": "2025-09-22",
+  "codex_binding": "Maison de AvaBleu | Live Communication OS",
+  "identity": "Zoom-like sovereign conferencing system with BLEU protections and integrations.",
+  "mission": {
+    "statement": "BLEUConfer delivers secure, sovereign video conferencing with integrated AntiSIM protection, BLEUVault archival, and seamless links to other BLEU systems.",
+    "pillars": [
+      "End-to-End Encryption & Sovereign Data Control",
+      "Multi-Device Participation",
+      "Integrated Contracts & Signatures",
+      "AntiSIM Defense Against Deepfakes & Fraud",
+      "Vault Archival of Meetings",
+      "Cross-Franchise Calendar & Event Sync"
+    ]
+  },
+  "modules": {
+    "core_video": {
+      "features": [
+        "HD & 4K video",
+        "low-latency audio",
+        "screen share & collaboration tools",
+        "recording auto-synced to BLEUVault"
+      ]
+    },
+    "identity_security": {
+      "features": [
+        "AntiSIM verification on entry",
+        "deepfake voice/face detection",
+        "role-based access (host, speaker, guest)"
+      ]
+    },
+    "contracts_integration": {
+      "features": [
+        "live AvaSign agreements inside sessions",
+        "BLEUContracts for sponsorships & honoraria",
+        "escrow milestone triggers in real time"
+      ]
+    },
+    "franchise_integration": {
+      "features": [
+        "BLEUCalendar sync",
+        "BLEUConference schedule overlay",
+        "AuraBleu/BLEULearn classrooms",
+        "Maison hospitality tie-ins (catering, vendor demos)"
+      ]
+    },
+    "media_layer": {
+      "features": [
+        "BLEURenderX virtual backgrounds",
+        "BLEUMotion live overlays",
+        "BLEUBroadcast multi-stream",
+        "BLEUVue session clips for social"
+      ]
+    },
+    "vault_archive": {
+      "features": [
+        "auto-store recordings with timestamps",
+        "AI-transcribed notes",
+        "heritage/treaty flagging for remembrance",
+        "searchable Codex index"
+      ]
+    }
+  },
+  "attendee_journey": [
+    "join via secure link",
+    "AntiSIM identity check",
+    "enter meeting or breakout room",
+    "engage with speakers & peers",
+    "vote/polls/contracts if triggered",
+    "archival into BLEUVault"
+  ],
+  "observability": {
+    "metrics": [
+      "meeting_participation_rate",
+      "average_latency",
+      "security_flags_blocked",
+      "vault_records_synced",
+      "contract_executions_in_session"
+    ],
+    "alerts": [
+      "deepfake_attempt_detected",
+      "fraudulent_identity_blocked",
+      "vault_sync_failure"
+    ]
+  },
+  "roadmap": {
+    "q4_2025": [
+      "MVP: video + vault archival",
+      "AntiSIM entry gates"
+    ],
+    "q1_2026": [
+      "contracts integration",
+      "BLEUCalendar + Conference sync"
+    ],
+    "q2_2026": [
+      "VR meeting spaces",
+      "multi-language live translation",
+      "heritage remembrance overlays"
+    ]
+  }
+}
