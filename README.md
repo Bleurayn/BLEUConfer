@@ -4,7 +4,7 @@ Sovereign video OS with AntiSIM &amp; smart contracts • WebRTC MVP
 # BLEUConfer – Sovereign Video Conferencing OS
 
 **Live MVP**: https://bleurayn.github.io/bleuconfer-sovereign-platform/  
-**Permanent DOI**: Coming Q4 2025
+**Permanent DOI**: https://doi.org/10.5281/zenodo.17885610
 
 End-to-end encrypted, deepfake-resistant video conferencing with live smart contracts and automatic archival.
 
