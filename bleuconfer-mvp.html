@@ -5,152 +5,214 @@
     <title>BLEUConfer – Sovereign Video Conferencing OS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        :root{--bleu:#6366f1;--dark:#1e1b4b;--light:#f8fafc}
-        body{font-family:system-ui,sans-serif;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;min-height:100vh;margin:0;display:flex;align-items:center;justify-content:center}
-        .container{max-width:1200px;margin:20px;padding:20px}
-        .header{text-align:center;margin-bottom:30px}
-        .logo{font-size:42px;font-weight:900;background:linear-gradient(135deg,#a78bfa,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-        .tagline{font-size:20px;opacity:0.9;margin-top:10px}
+        :root{--bleu:#6366f1;--violet:#8b5cf6;--pink:#ec4899;--dark:#1e1b4b;--light:#f8fafc}
+        body{font-family:system-ui,-apple-system,sans-serif;background:linear-gradient(135deg,var(--bleu),var(--violet));color:white;min-height:100vh;margin:0;display:flex;align-items:center;justify-content:center}
+        .container{max-width:1400px;width:100%;margin:20px;padding:20px;box-sizing:border-box}
+        .header{text-align:center;margin-bottom:40px}
+        .logo{font-size:48px;font-weight:900;background:linear-gradient(135deg,#a78bfa,var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .tagline{font-size:22px;opacity:0.9;margin:15px 0}
         .prototype-warning{
-            background:rgba(239,68,68,0.3);
-            border:2px solid #ef4444;
-            border-radius:16px;
-            padding:25px;
-            margin:30px 0;
+            background:rgba(239,68,68,0.25);
+            border:3px solid #ef4444;
+            border-radius:20px;
+            padding:30px;
+            margin:40px 0;
             text-align:center;
-            font-size:19px;
-            backdrop-filter:blur(8px);
-            line-height:1.6;
+            font-size:20px;
+            backdrop-filter:blur(10px);
+            line-height:1.7;
+            box-shadow:0 10px 30px rgba(0,0,0,0.3);
         }
-        .prototype-warning strong{color:#fbbf24;font-size:22px}
-        .card{background:rgba(255,255,255,0.1);backdrop-filter:blur(12px);border-radius:20px;padding:30px;box-shadow:0 20px 40px rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.2)}
-        .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:25px}
+        .prototype-warning strong{color:#fbbf24;font-size:24px}
+        .card{background:rgba(255,255,255,0.12);backdrop-filter:blur(15px);border-radius:24px;padding:40px;box-shadow:0 25px 50px rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.25)}
+        .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:30px}
         .placeholder-video{
             width:100%;
-            height:260px;
-            border-radius:16px;
+            height:280px;
+            border-radius:18px;
             background:linear-gradient(45deg,#1e293b,#334155);
-            box-shadow:0 10px 30px rgba(0,0,0,0.4);
+            box-shadow:0 15px 35px rgba(0,0,0,0.5);
             display:flex;
+            flex-direction:column;
             align-items:center;
             justify-content:center;
-            font-size:18px;
+            font-size:19px;
             text-align:center;
-            color:#94a3b8;
-            padding:20px;
-            box-sizing:border-box;
+            color:#cbd5e1;
         }
-        .controls{margin-top:20px;display:flex;gap:15px;justify-content:center;flex-wrap:wrap}
-        button{padding:14px 28px;border:none;border-radius:50px;font-weight:600;cursor:not-allowed;opacity:0.5;transition:all .3s}
-        .btn-primary{background:#fff;color:var(--bleu);box-shadow:0 8px 25px rgba(0,0,0,0.2)}
+        .placeholder-video small{font-size:14px;margin-top:10px;opacity:0.8}
+        .controls{margin-top:30px;display:flex;gap:18px;justify-content:center;flex-wrap:wrap}
+        button{padding:16px 32px;border:none;border-radius:50px;font-weight:600;font-size:16px;cursor:not-allowed;opacity:0.5;transition:all .3s}
+        .btn-primary{background:#fff;color:var(--bleu);box-shadow:0 10px 30px rgba(0,0,0,0.3)}
         .btn-danger{background:#ef4444;color:white}
-        .status{display:flex;align-items:center;justify-content:center;gap:10px;margin:20px 0;font-size:18px}
-        .live-dot{width:12px;height:12px;background:#10b981;border-radius:50%;animation:pulse 2s infinite}
-        @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
-        .watermark{position:fixed;bottom:15px;right:15px;background:rgba(0,0,0,0.7);color:white;padding:8px 16px;border-radius:8px;font-size:11px}
-        .feature-grid{margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;text-align:center}
-        .feature{background:rgba(255,255,255,0.15);padding:20px;border-radius:16px}
-        .feature h3{margin:10px 0;font-size:18px}
-        .mvp-features{margin-top:40px;padding:20px;background:rgba(255,255,255,0.1);border-radius:16px}
-        .mvp-features h2{text-align:center;margin-bottom:20px;color:#a78bfa}
-        .mvp-list{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px}
-        .mvp-list li{font-size:18px;padding:12px;background:rgba(255,255,255,0.1);border-radius:12px;border-left:4px solid #a78bfa}
+        .status{display:flex;align-items:center;justify-content:center;gap:12px;margin:25px 0;font-size:20px}
+        .live-dot{width:14px;height:14px;background:#10b981;border-radius:50%;animation:pulse 2s infinite}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+        .watermark{position:fixed;bottom:15px;right:15px;background:rgba(0,0,0,0.7);color:white;padding:10px 18px;border-radius:10px;font-size:12px}
+        .sections{margin-top:50px}
+        .section-title{text-align:center;font-size:26px;margin:40px 0 20px;color:#a78bfa}
+        .pillars-grid,.modules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:25px}
+        .pillar,.module{background:rgba(255,255,255,0.1);padding:25px;border-radius:18px;border-left:5px solid #a78bfa}
+        .pillar h3,.module h3{margin-top:0;font-size:20px;color:#fbbf24}
+        .feature-list{list-style:none;padding:0;margin:15px 0 0}
+        .feature-list li{padding:8px 0;font-size:17px;position:relative;padding-left:25px}
+        .feature-list li:before{content:"✓";position:absolute;left:0;color:#10b981;font-weight:bold}
+        .roadmap{margin-top:60px}
+        .roadmap h2{text-align:center;color:#a78bfa;margin-bottom:30px}
+        .quarter{background:rgba(255,255,255,0.1);padding:20px;border-radius:16px}
+        .quarter h3{margin:0 0 15px;font-size:20px;color:#fbbf24}
     </style>
 </head>
 <body>
     <div class="watermark">
-        © 2025 Cassandra Harrison / Avableu Designs LTD<br>
-        BLEUConfer MVP • Commercial platform closed-source
+        © 2025 Cassandra Harrison / AvaBleu Designs LTD<br>
+        BLEUConfer • Proprietary Closed-Source Platform
     </div>
+
     <div class="container">
         <div class="header">
             <div class="logo">BLEUConfer</div>
-            <div class="tagline">Sovereign Video • AntiSIM Defense • Smart Contracts</div>
-            <div class="status"><div class="live-dot"></div>LIVE SOVEREIGN CONNECTION</div>
+            <div class="tagline">Maison de AvaBleu | Live Communication OS</div>
+            <div class="status"><div class="live-dot"></div>SOVEREIGN CONFERENCING PLATFORM</div>
         </div>
 
-        <!-- Strong Prototype Warning -->
+        <!-- Prototype Warning -->
         <div class="prototype-warning">
-            <strong>PROTOTYPE DEMONSTRATION ONLY – NON-FUNCTIONAL TEASER</strong><br><br>
-            This page is a <strong>static visual prototype</strong> intended solely for demonstration and marketing purposes.<br><br>
-            <strong>No working video calling, no PeerJS connection, no P2P functionality whatsoever is included.</strong><br>
-            All core systems (AntiSIM verification, decentralized routing, smart contracts, vault archiving, deepfake defense) are <strong>proprietary and closed-source</strong>.<br><br>
-            <strong>To obtain the complete, fully functional BLEUConfer platform or discuss licensing/partnership, please contact Cassandra Harrison directly.</strong><br><br>
-            No usable code, implementation, or technical details are provided in this public file.
+            <strong>PROTOTYPE TEASER ONLY – NON-FUNCTIONAL DEMO</strong><br><br>
+            This is a <strong>static visual prototype</strong> of BLEUConfer — the full-stack sovereign video conferencing operating system.<br><br>
+            <strong>No functional video calling, P2P connection, recording, AntiSIM, contracts, or vault integration is included here.</strong><br>
+            All core technology, architecture, and implementations are <strong>proprietary and closed-source</strong>.<br><br>
+            <strong>For access to the complete BLEUConfer platform, partnerships, or licensing, please contact Cassandra Harrison directly.</strong><br><br>
+            This public file contains no executable or replicable code.
         </div>
 
         <div class="card">
             <div class="grid">
                 <div>
-                    <h2>Your Camera (Visual Placeholder)</h2>
+                    <h2 style="text-align:center">Local Participant</h2>
                     <div class="placeholder-video">
-                        Local Camera Feed<br><small>(Static placeholder – no camera access in prototype)</small>
+                        HD / 4K Video Feed<br><small>Static placeholder – full video in closed-source platform</small>
                     </div>
                 </div>
                 <div>
-                    <h2>Remote Peer (Visual Placeholder)</h2>
+                    <h2 style="text-align:center">Remote Participant</h2>
                     <div class="placeholder-video">
-                        Remote Peer Feed<br><small>(Static placeholder – no connection possible)</small>
+                        Sovereign Peer Connection<br><small>End-to-end encrypted – not active in prototype</small>
                     </div>
                 </div>
             </div>
+
             <div class="controls">
-                <button class="btn-primary" disabled>Start Secure Call (Disabled)</button>
-                <button class="btn-primary" disabled>Call Peer ID (Disabled)</button>
-                <input type="text" id="peerId" placeholder="Enter remote Peer ID" style="padding:12px;border-radius:50px;border:none;width:200px" disabled>
-                <button class="btn-danger" disabled>End Call (Disabled)</button>
+                <button class="btn-primary" disabled>Join Secure Meeting (Prototype)</button>
+                <button class="btn-primary" disabled>Start Broadcast (Prototype)</button>
+                <button class="btn-danger" disabled>End Session (Prototype)</button>
             </div>
-            <div style="margin-top:30px;padding:20px;background:rgba(0,0,0,0.2);border-radius:16px">
-                <p><strong>Your Secure Peer ID:</strong> 
-                    <span id="myId" style="font-family:monospace;background:#000;padding:5px 10px;border-radius:8px">prototype-mode-only</span>
-                </p>
+
+            <div style="margin-top:35px;padding:25px;background:rgba(0,0,0,0.3);border-radius:18px;text-align:center">
+                <p><strong>Session Status:</strong> Prototype Mode – No Active Connection</p>
             </div>
         </div>
 
-        <!-- MVP Features Section -->
-        <div class="mvp-features">
-            <h2>MVP Features (Available in Full Closed-Source Version)</h2>
-            <ul class="mvp-list">
-                <li>WebRTC peer-to-peer HD video & audio</li>
-                <li>Sovereign Peer ID system (foundation for AntiSIM)</li>
-                <li>Zero servers — fully decentralized</li>
-            </ul>
-        </div>
+        <div class="sections">
+            <h2 class="section-title">Mission Pillars</h2>
+            <div class="pillars-grid">
+                <div class="pillar"><h3>End-to-End Encryption & Sovereign Data Control</h3></div>
+                <div class="pillar"><h3>Multi-Device Participation</h3></div>
+                <div class="pillar"><h3>Integrated Contracts & Signatures</h3></div>
+                <div class="pillar"><h3>AntiSIM Defense Against Deepfakes & Fraud</h3></div>
+                <div class="pillar"><h3>Vault Archival of Meetings</h3></div>
+                <div class="pillar"><h3>Cross-Franchise Calendar & Event Sync</h3></div>
+            </div>
 
-        <div class="feature-grid">
-            <div class="feature">
-                <h3>End-to-End Encryption</h3>
-                <p>Built-in WebRTC security</p>
+            <h2 class="section-title">Core Modules (Closed-Source)</h2>
+            <div class="modules-grid">
+                <div class="module">
+                    <h3>Core Video & Collaboration</h3>
+                    <ul class="feature-list">
+                        <li>HD & 4K video</li>
+                        <li>Low-latency audio</li>
+                        <li>Screen share & collaboration tools</li>
+                        <li>Recording auto-synced to BLEUVault</li>
+                    </ul>
+                </div>
+                <div class="module">
+                    <h3>Identity Security</h3>
+                    <ul class="feature-list">
+                        <li>AntiSIM verification on entry</li>
+                        <li>Deepfake voice/face detection</li>
+                        <li>Role-based access (host, speaker, guest)</li>
+                    </ul>
+                </div>
+                <div class="module">
+                    <h3>Contracts Integration</h3>
+                    <ul class="feature-list">
+                        <li>Live AvaSign agreements inside sessions</li>
+                        <li>BLEUContracts for sponsorships & honoraria</li>
+                        <li>Escrow milestone triggers in real time</li>
+                    </ul>
+                </div>
+                <div class="module">
+                    <h3>Franchise Integration</h3>
+                    <ul class="feature-list">
+                        <li>BLEUCalendar sync</li>
+                        <li>BLEUConference schedule overlay</li>
+                        <li>AuraBleu/BLEULearn classrooms</li>
+                        <li>Maison hospitality tie-ins</li>
+                    </ul>
+                </div>
+                <div class="module">
+                    <h3>Media Layer</h3>
+                    <ul class="feature-list">
+                        <li>BLEURenderX virtual backgrounds</li>
+                        <li>BLEUMotion live overlays</li>
+                        <li>BLEUBroadcast multi-stream</li>
+                        <li>BLEUVue session clips for social</li>
+                    </ul>
+                </div>
+                <div class="module">
+                    <h3>Vault Archive</h3>
+                    <ul class="feature-list">
+                        <li>Auto-store recordings with timestamps</li>
+                        <li>AI-transcribed notes</li>
+                        <li>Heritage/treaty flagging</li>
+                        <li>Searchable Codex index</li>
+                    </ul>
+                </div>
             </div>
-            <div class="feature">
-                <h3>AntiSIM Verification</h3>
-                <p>Future-proof identity defense</p>
-            </div>
-            <div class="feature">
-                <h3>Live Contracts</h3>
-                <p>Smart agreement integration</p>
-            </div>
-            <div class="feature">
-                <h3>Vault Auto-Archive</h3>
-                <p>Secure recording storage</p>
-            </div>
-            <div class="feature">
-                <h3>BLEUCalendar Sync</h3>
-                <p>Seamless scheduling</p>
-            </div>
-            <div class="feature">
-                <h3>Deepfake Defense</h3>
-                <p>AI-powered authenticity checks</p>
+
+            <div class="roadmap">
+                <h2>Roadmap</h2>
+                <div class="grid">
+                    <div class="quarter">
+                        <h3>Q4 2025</h3>
+                        <ul class="feature-list">
+                            <li>MVP: video + vault archival</li>
+                            <li>AntiSIM entry gates</li>
+                        </ul>
+                    </div>
+                    <div class="quarter">
+                        <h3>Q1 2026</h3>
+                        <ul class="feature-list">
+                            <li>Contracts integration</li>
+                            <li>BLEUCalendar + Conference sync</li>
+                        </ul>
+                    </div>
+                    <div class="quarter">
+                        <h3>Q2 2026</h3>
+                        <ul class="feature-list">
+                            <li>VR meeting spaces</li>
+                            <li>Multi-language live translation</li>
+                            <li>Heritage remembrance overlays</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        console.log('%cBLEUConfer — NON-FUNCTIONAL PROTOTYPE TEASER ONLY\nNo working code is included. All core technology is proprietary and closed-source.\nContact Cassandra Harrison directly for the real platform.',
-            'color:#dc2626;font-size:16px;font-weight:bold;background:#fee2e2;padding:12px;border-radius:8px;');
-
-        // Minimal script – only sets the static Peer ID text
-        document.getElementById('myId').textContent = 'prototype-mode-only';
+        console.log('%cBLEUConfer — PROPRIETARY PLATFORM TEASER\nThis is a non-functional static prototype only.\nAll technology is closed-source. Contact Cassandra Harrison for access.',
+            'color:#dc2626;font-size:16px;font-weight:bold;background:#fee2e2;padding:15px;border-radius:10px;');
     </script>
 </body>
 </html>
