@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>BLEUConfer – Sovereign Video Conferencing OS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+    <!-- Removed PeerJS script completely – no external dependency that could enable functionality -->
     <style>
         :root{--bleu:#6366f1;--dark:#1e1b4b;--light:#f8fafc}
         body{font-family:system-ui,sans-serif;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;min-height:100vh;margin:0;display:flex;align-items:center;justify-content:center}
@@ -16,18 +16,20 @@
             background:rgba(239,68,68,0.3);
             border:2px solid #ef4444;
             border-radius:16px;
-            padding:20px;
+            padding:25px;
             margin:30px 0;
             text-align:center;
-            font-size:18px;
+            font-size:19px;
             backdrop-filter:blur(8px);
+            line-height:1.6;
         }
-        .prototype-warning strong{color:#fbbf24}
+        .prototype-warning strong{color:#fbbf24;font-size:22px}
         .card{background:rgba(255,255,255,0.1);backdrop-filter:blur(12px);border-radius:20px;padding:30px;box-shadow:0 20px 40px rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.2)}
         .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:25px}
-        video{width:100%;border-radius:16px;background:#000;box-shadow:0 10px 30px rgba(0,0,0,0.4);filter:blur(8px)} /* Intentional blur on video */
+        video{width:100%;height:240px;border-radius:16px;background:#000;box-shadow:0 10px 30px rgba(0,0,0,0.4);object-fit:cover}
+        .placeholder-video{background:linear-gradient(45deg,#1e293b,#334155);display:flex;align-items:center;justify-content:center;font-size:18px;text-align:center;color:#94a3b8}
         .controls{margin-top:20px;display:flex;gap:15px;justify-content:center;flex-wrap:wrap}
-        button{padding:14px 28px;border:none;border-radius:50px;font-weight:600;cursor:not-allowed;opacity:0.6;transition:all .3s}
+        button{padding:14px 28px;border:none;border-radius:50px;font-weight:600;cursor:not-allowed;opacity:0.5;transition:all .3s}
         .btn-primary{background:#fff;color:var(--bleu);box-shadow:0 8px 25px rgba(0,0,0,0.2)}
         .btn-danger{background:#ef4444;color:white}
         .status{display:flex;align-items:center;justify-content:center;gap:10px;margin:20px 0;font-size:18px}
@@ -55,24 +57,29 @@
             <div class="status"><div class="live-dot"></div>LIVE SOVEREIGN CONNECTION</div>
         </div>
 
-        <!-- Strong Prototype Warning -->
+        <!-- Stronger Prototype Warning -->
         <div class="prototype-warning">
-            <strong>PROTOTYPE DEMONSTRATION ONLY</strong><br><br>
-            This is a <strong>limited public prototype</strong> for demonstration purposes.<br>
-            Core functionality (full P2P connection, AntiSIM verification, smart contracts, vault archiving) is <strong>disabled and closed-source</strong>.<br><br>
-            <strong>To access the complete, fully functional BLEUConfer platform, please engage directly with Cassandra Harrison.</strong><br>
-            No production-ready code or full implementation is provided here.
+            <strong>PROTOTYPE DEMONSTRATION ONLY – NON-FUNCTIONAL TEASER</strong><br><br>
+            This page is a <strong>static visual prototype</strong> intended solely for demonstration and marketing purposes.<br><br>
+            <strong>No working video calling, no PeerJS connection, no P2P functionality whatsoever is included.</strong><br>
+            All core systems (AntiSIM verification, decentralized routing, smart contracts, vault archiving, deepfake defense) are <strong>proprietary and closed-source</strong>.<br><br>
+            <strong>To obtain the complete, fully functional BLEUConfer platform or discuss licensing/partnership, please contact Cassandra Harrison directly.</strong><br><br>
+            No usable code, implementation, or technical details are provided in this public file.
         </div>
 
         <div class="card">
             <div class="grid">
                 <div>
-                    <h2>Your Camera (Blurred in Prototype)</h2>
-                    <video id="localVideo" autoplay muted playsinline></video>
+                    <h2>Your Camera (Visual Placeholder)</h2>
+                    <div class="placeholder-video" id="localVideo">
+                        Local Camera Feed<br><small>(Static placeholder – no camera access in prototype)</small>
+                    </div>
                 </div>
                 <div>
-                    <h2>Remote Peer (Blurred in Prototype)</h2>
-                    <video id="remoteVideo" autoplay playsinline></video>
+                    <h2>Remote Peer (Visual Placeholder)</h2>
+                    <div class="placeholder-video" id="remoteVideo">
+                        Remote Peer Feed<br><small>(Static placeholder – no connection possible)</small>
+                    </div>
                 </div>
             </div>
             <div class="controls">
@@ -82,13 +89,15 @@
                 <button class="btn-danger" disabled>End Call (Disabled)</button>
             </div>
             <div style="margin-top:30px;padding:20px;background:rgba(0,0,0,0.2);border-radius:16px">
-                <p><strong>Your Secure Peer ID:</strong> <span id="myId" style="font-family:monospace;background:#000;padding:5px 10px;border-radius:8px">prototype-mode</span></p>
+                <p><strong>Your Secure Peer ID:</strong> 
+                    <span id="myId" style="font-family:monospace;background:#000;padding:5px 10px;border-radius:8px">prototype-mode-only</span>
+                </p>
             </div>
         </div>
 
         <!-- MVP Features Section -->
         <div class="mvp-features">
-            <h2>MVP Features (Full Version)</h2>
+            <h2>MVP Features (Available in Full Closed-Source Version)</h2>
             <ul class="mvp-list">
                 <li>WebRTC peer-to-peer HD video & audio</li>
                 <li>Sovereign Peer ID system (foundation for AntiSIM)</li>
@@ -125,22 +134,11 @@
     </div>
 
     <script>
-        console.log('%cBLEUConfer — PROTOTYPE DEMONSTRATION ONLY\nCore systems are closed-source and not included in this public view.\nContact Cassandra Harrison for full platform access.',
+        console.log('%cBLEUConfer — NON-FUNCTIONAL PROTOTYPE TEASER ONLY\nNo working code is included. All core technology is proprietary and closed-source.\nContact Cassandra Harrison directly for the real platform.',
             'color:#dc2626;font-size:16px;font-weight:bold;background:#fee2e2;padding:12px;border-radius:8px;');
 
-        // Minimal script — only shows local video (blurred by CSS), no PeerJS connection possible
-        const localVideo = document.getElementById('localVideo');
-        
-        navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-            .then(stream => {
-                localVideo.srcObject = stream;
-            })
-            .catch(err => {
-                console.warn('Media access denied or unavailable in prototype:', err);
-            });
-
-        // All interactive functionality intentionally removed
-        document.getElementById('myId').textContent = 'prototype-mode';
+        // Absolutely minimal script – no camera access, no PeerJS, nothing functional
+        document.getElementById('myId').textContent = 'prototype-mode-only';
     </script>
 </body>
 </html>
