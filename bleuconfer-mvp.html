@@ -1,131 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>BLEUConfer – Sovereign Video Conferencing OS</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
-<style>
-  :root{--bleu:#6366f1;--dark:#1e1b4b;--light:#f8fafc}
-  body{font-family:system-ui,sans-serif;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;min-height:100vh;margin:0;display:flex;align-items:center;justify-content:center}
-  .container{max-width:1200px;margin:20px;padding:20px}
-  .header{text-align:center;margin-bottom:30px}
-  .logo{font-size:42px;font-weight:900;background:linear-gradient(135deg,#a78bfa,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-  .tagline{font-size:20px;opacity:0.9;margin-top:10px}
-  .card{background:rgba(255,255,255,0.1);backdrop-filter:blur(12px);border-radius:20px;padding:30px;box-shadow:0 20px 40px rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.2)}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:25px}
-  video{width:100%;border-radius:16px;background:#000;box-shadow:0 10px 30px rgba(0,0,0,0.4)}
-  .controls{margin-top:20px;display:flex;gap:15px;justify-content:center;flex-wrap:wrap}
-  button{padding:14px 28px;border:none;border-radius:50px;font-weight:600;cursor:pointer;transition:all .3s}
-  .btn-primary{background:#fff;color:var(--bleu);box-shadow:0 8px 25px rgba(0,0,0,0.2)}
-  .btn-danger{background:#ef4444;color:white}
-  .status{display:flex;align-items:center;justify-content:center;gap:10px;margin:20px 0;font-size:18px}
-  .live-dot{width:12px;height:12px;background:#10b981;border-radius:50%;animation:pulse 2s infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
-  .watermark{position:fixed;bottom:15px;right:15px;background:rgba(0,0,0,0.7);color:white;padding:8px 16px;border-radius:8px;font-size:11px}
-  .feature-grid{margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;text-align:center}
-  .feature{background:rgba(255,255,255,0.15);padding:20px;border-radius:16px}
-  .feature h3{margin:10px 0;font-size:18px}
-</style>
+    <meta charset="UTF-8">
+    <title>BLEUConfer – Sovereign Video Conferencing OS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+    <style>
+        :root{--bleu:#6366f1;--dark:#1e1b4b;--light:#f8fafc}
+        body{font-family:system-ui,sans-serif;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;min-height:100vh;margin:0;display:flex;align-items:center;justify-content:center}
+        .container{max-width:1200px;margin:20px;padding:20px}
+        .header{text-align:center;margin-bottom:30px}
+        .logo{font-size:42px;font-weight:900;background:linear-gradient(135deg,#a78bfa,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .tagline{font-size:20px;opacity:0.9;margin-top:10px}
+        .prototype-warning{
+            background:rgba(239,68,68,0.3);
+            border:2px solid #ef4444;
+            border-radius:16px;
+            padding:20px;
+            margin:30px 0;
+            text-align:center;
+            font-size:18px;
+            backdrop-filter:blur(8px);
+        }
+        .prototype-warning strong{color:#fbbf24}
+        .card{background:rgba(255,255,255,0.1);backdrop-filter:blur(12px);border-radius:20px;padding:30px;box-shadow:0 20px 40px rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.2)}
+        .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:25px}
+        video{width:100%;border-radius:16px;background:#000;box-shadow:0 10px 30px rgba(0,0,0,0.4);filter:blur(8px)} /* Intentional blur on video */
+        .controls{margin-top:20px;display:flex;gap:15px;justify-content:center;flex-wrap:wrap}
+        button{padding:14px 28px;border:none;border-radius:50px;font-weight:600;cursor:not-allowed;opacity:0.6;transition:all .3s}
+        .btn-primary{background:#fff;color:var(--bleu);box-shadow:0 8px 25px rgba(0,0,0,0.2)}
+        .btn-danger{background:#ef4444;color:white}
+        .status{display:flex;align-items:center;justify-content:center;gap:10px;margin:20px 0;font-size:18px}
+        .live-dot{width:12px;height:12px;background:#10b981;border-radius:50%;animation:pulse 2s infinite}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+        .watermark{position:fixed;bottom:15px;right:15px;background:rgba(0,0,0,0.7);color:white;padding:8px 16px;border-radius:8px;font-size:11px}
+        .feature-grid{margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;text-align:center}
+        .feature{background:rgba(255,255,255,0.15);padding:20px;border-radius:16px}
+        .feature h3{margin:10px 0;font-size:18px}
+        .mvp-features{margin-top:40px;padding:20px;background:rgba(255,255,255,0.1);border-radius:16px}
+        .mvp-features h2{text-align:center;margin-bottom:20px;color:#a78bfa}
+        .mvp-list{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px}
+        .mvp-list li{font-size:18px;padding:12px;background:rgba(255,255,255,0.1);border-radius:12px;border-left:4px solid #a78bfa}
+    </style>
 </head>
 <body>
-<div class="watermark">
-  © 2025 Cassandra Harrison / Avableu Designs LTD<br>
-  BLEUConfer MVP • Commercial platform closed-source
-</div>
+    <div class="watermark">
+        © 2025 Cassandra Harrison / Avableu Designs LTD<br>
+        BLEUConfer MVP • Commercial platform closed-source
+    </div>
+    <div class="container">
+        <div class="header">
+            <div class="logo">BLEUConfer</div>
+            <div class="tagline">Sovereign Video • AntiSIM Defense • Smart Contracts</div>
+            <div class="status"><div class="live-dot"></div>LIVE SOVEREIGN CONNECTION</div>
+        </div>
 
-<div class="container">
-  <div class="header">
-    <div class="logo">BLEUConfer</div>
-    <div class="tagline">Sovereign Video • AntiSIM Defense • Smart Contracts</div>
-    <div class="status"><div class="live-dot"></div>LIVE SOVEREIGN CONNECTION</div>
-  </div>
+        <!-- Strong Prototype Warning -->
+        <div class="prototype-warning">
+            <strong>PROTOTYPE DEMONSTRATION ONLY</strong><br><br>
+            This is a <strong>limited public prototype</strong> for demonstration purposes.<br>
+            Core functionality (full P2P connection, AntiSIM verification, smart contracts, vault archiving) is <strong>disabled and closed-source</strong>.<br><br>
+            <strong>To access the complete, fully functional BLEUConfer platform, please engage directly with Cassandra Harrison.</strong><br>
+            No production-ready code or full implementation is provided here.
+        </div>
 
-  <div class="card">
-    <div class="grid">
-      <div>
-        <h2>Your Camera</h2>
-        <video id="localVideo" autoplay muted playsinline></video>
-      </div>
-      <div>
-        <h2>Remote Peer</h2>
-        <video id="remoteVideo" autoplay playsinline></video>
-      </div>
+        <div class="card">
+            <div class="grid">
+                <div>
+                    <h2>Your Camera (Blurred in Prototype)</h2>
+                    <video id="localVideo" autoplay muted playsinline></video>
+                </div>
+                <div>
+                    <h2>Remote Peer (Blurred in Prototype)</h2>
+                    <video id="remoteVideo" autoplay playsinline></video>
+                </div>
+            </div>
+            <div class="controls">
+                <button class="btn-primary" disabled>Start Secure Call (Disabled)</button>
+                <button class="btn-primary" disabled>Call Peer ID (Disabled)</button>
+                <input type="text" id="peerId" placeholder="Enter remote Peer ID" style="padding:12px;border-radius:50px;border:none;width:200px" disabled>
+                <button class="btn-danger" disabled>End Call (Disabled)</button>
+            </div>
+            <div style="margin-top:30px;padding:20px;background:rgba(0,0,0,0.2);border-radius:16px">
+                <p><strong>Your Secure Peer ID:</strong> <span id="myId" style="font-family:monospace;background:#000;padding:5px 10px;border-radius:8px">prototype-mode</span></p>
+            </div>
+        </div>
+
+        <!-- MVP Features Section -->
+        <div class="mvp-features">
+            <h2>MVP Features (Full Version)</h2>
+            <ul class="mvp-list">
+                <li>WebRTC peer-to-peer HD video & audio</li>
+                <li>Sovereign Peer ID system (foundation for AntiSIM)</li>
+                <li>Zero servers — fully decentralized</li>
+            </ul>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature">
+                <h3>End-to-End Encryption</h3>
+                <p>Built-in WebRTC security</p>
+            </div>
+            <div class="feature">
+                <h3>AntiSIM Verification</h3>
+                <p>Future-proof identity defense</p>
+            </div>
+            <div class="feature">
+                <h3>Live Contracts</h3>
+                <p>Smart agreement integration</p>
+            </div>
+            <div class="feature">
+                <h3>Vault Auto-Archive</h3>
+                <p>Secure recording storage</p>
+            </div>
+            <div class="feature">
+                <h3>BLEUCalendar Sync</h3>
+                <p>Seamless scheduling</p>
+            </div>
+            <div class="feature">
+                <h3>Deepfake Defense</h3>
+                <p>AI-powered authenticity checks</p>
+            </div>
+        </div>
     </div>
 
-    <div class="controls">
-      <button class="btn-primary" id="startBtn">Start Secure Call</button>
-      <button class="btn-primary" id="callBtn" disabled>Call Peer ID</button>
-      <input type="text" id="peerId" placeholder="Enter remote Peer ID" style="padding:12px;border-radius:50px;border:none;width:200px">
-      <button class="btn-danger" id="endBtn" disabled>End Call</button>
-    </div>
+    <script>
+        console.log('%cBLEUConfer — PROTOTYPE DEMONSTRATION ONLY\nCore systems are closed-source and not included in this public view.\nContact Cassandra Harrison for full platform access.',
+            'color:#dc2626;font-size:16px;font-weight:bold;background:#fee2e2;padding:12px;border-radius:8px;');
 
-    <div style="margin-top:30px;padding:20px;background:rgba(0,0,0,0.2);border-radius:16px">
-      <p><strong>Your Secure Peer ID:</strong> <span id="myId" style="font-family:monospace;background:#000;padding:5px 10px;border-radius:8px">generating...</span></p>
-    </div>
-  </div>
+        // Minimal script — only shows local video (blurred by CSS), no PeerJS connection possible
+        const localVideo = document.getElementById('localVideo');
+        
+        navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+            .then(stream => {
+                localVideo.srcObject = stream;
+            })
+            .catch(err => {
+                console.warn('Media access denied or unavailable in prototype:', err);
+            });
 
-  <div class="feature-grid">
-    <div class="feature">End-to-End Encryption</div>
-    <div class="feature">AntiSIM Verification</div>
-    <div class="feature">Live Contracts</div>
-    <div class="feature">Vault Auto-Archive</div>
-    <div class="feature">BLEUCalendar Sync</div>
-    <div class="feature">Deepfake Defense</div>
-  </div>
-</div>
-
-<script>
-console.log('%cBLEUConfer — CONFIDENTIAL MVP\nThis is a public demonstration only. Full platform (AntiSIM ML, BLEUVault, contracts) is closed-source.', 
-  'color:#dc2626;font-size:16px;font-weight:bold;background:#fee2e2;padding:12px;border-radius:8px;');
-
-const localVideo = document.getElementById('localVideo');
-const remoteVideo = document.getElementById('remoteVideo');
-const myIdSpan = document.getElementById('myId');
-const peerIdInput = document.getElementById('peerId');
-const startBtn = document.getElementById('startBtn');
-const callBtn = document.getElementById('callBtn');
-const endBtn = document.getElementById('endBtn');
-
-let peer = null;
-let currentCall = null;
-
-navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-  .then(stream => { localVideo.srcObject = stream; localVideo.stream = stream; })
-  .catch(err => alert('Camera/microphone access required for demo'));
-
-startBtn.onclick = () => {
-  peer = new Peer();
-  peer.on('open', id => myIdSpan.textContent = id);
-  peer.on('call', call => {
-    if(confirm(`Incoming secure call from ${call.peer}. Accept?`)) {
-      currentCall = call;
-      call.answer(localVideo.stream);
-      call.on('stream', remoteStream => remoteVideo.srcObject = remoteStream);
-      toggleButtons(true);
-    }
-  });
-  startBtn.disabled = true;
-  callBtn.disabled = false;
-};
-
-callBtn.onclick = () => {
-  const call = peer.call(peerIdInput.value, localVideo.stream);
-  currentCall = call;
-  call.on('stream', remoteStream => remoteVideo.srcObject = remoteStream);
-  toggleButtons(true);
-};
-
-endBtn.onclick = () => {
-  if(currentCall) currentCall.close();
-  remoteVideo.srcObject = null;
-  toggleButtons(false);
-};
-
-function toggleButtons(calling) {
-  callBtn.disabled = calling;
-  endBtn.disabled = !calling;
-}
-</script>
+        // All interactive functionality intentionally removed
+        document.getElementById('myId').textContent = 'prototype-mode';
+    </script>
 </body>
 </html>
